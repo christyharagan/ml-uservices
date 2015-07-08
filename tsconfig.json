@@ -16,7 +16,6 @@
         "./typings/**/*.d.ts",
         "./node_modules/*/*.d.ts",
         "./node_modules/typescript/bin/typescript.d.ts",
-        "./node_modules/rx/ts/rx.d.ts",
         "./ml-uservices.d.ts"
     ],
     "compileOnSave": true,
@@ -24,20 +23,19 @@
         "./lib/decorators.ts",
         "./lib/deploy.ts",
         "./lib/index.ts",
-        "./lib/mlSpecGenerator.ts",
-        "./lib/query.ts",
         "./lib/remoteProxy.ts",
         "./lib/rfp.ts",
+        "./lib/utils.ts",
         "./typings/es6/es6.d.ts",
         "./typings/node/node.d.ts",
         "./typings/tsd.d.ts",
         "./node_modules/ml-admin/ml-admin.d.ts",
         "./node_modules/ml-typescript-definitions/client.d.ts",
         "./node_modules/ml-typescript-definitions/server.d.ts",
+        "./node_modules/speckle/speckle.d.ts",
         "./node_modules/typescript-schema/typescript-schema.d.ts",
         "./node_modules/uservices/uservices.d.ts",
         "./node_modules/typescript/bin/typescript.d.ts",
-        "./node_modules/rx/ts/rx.d.ts",
         "./ml-uservices.d.ts"
     ]
 }

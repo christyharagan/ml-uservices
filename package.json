@@ -25,11 +25,12 @@
   "license": "MIT",
   "dependencies": {
     "marklogic": "1.0.2",
-    "ml-admin": "^0.1.0",
-    "ml-typescript-definitions": "^0.1.0",
+    "ml-admin": "^0.2.0",
+    "speckle": "^0.1.0",
+    "ml-typescript-definitions": "^0.2.0",
     "rx": "^2.5.3",
     "typescript": "^1.5.0-beta",
-    "typescript-schema": "^0.2.0",
-    "uservices": "^0.2.0"
+    "typescript-schema": "^0.3.0",
+    "uservices": "^0.3.0"
   }
 }
