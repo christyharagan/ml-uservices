@@ -23,6 +23,7 @@
         "./lib/decorators.ts",
         "./lib/deploy.ts",
         "./lib/index.ts",
+        "./lib/localProxy.ts",
         "./lib/remoteProxy.ts",
         "./lib/rfp.ts",
         "./lib/utils.ts",

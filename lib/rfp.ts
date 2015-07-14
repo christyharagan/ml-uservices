@@ -124,88 +124,6 @@ export class BasicSubject<T> implements Subject<T>, Disposable {
   }
 }
 
-/*export class BasicSubject<T> implements Subject<T>, Disposable {
-  private observers: Observer<any>[]
-  private i:number = 0
-
-  map<TResult>(selector: (value: T, index: number, source: Observable<T>) => TResult, thisArg?: any): Observable<TResult> {
-    let map = new BasicSubject<TResult>()
-
-    let self = this
-
-    this.subscribe({
-      onNext: function(value:T) {
-        map.onNext(selector(value, this.i, self))
-      },onError:map.onError.bind(map),onCompleted:map.onCompleted.bind(map)
-    })
-
-    return map
-  }
-
-  dispose(): void {
-    this.disposed = true
-    this.observers = []
-  }
-
-  onNext(value: T) {
-    if (!this.disposed) {
-      this.observers.forEach(function(observer){
-        observer.onNext(value)
-      })
-      this.i++
-    }
-  }
-
-  onError(e) {
-    if (!this.disposed) {
-      this.observers.forEach(function(observer){
-        observer.onError(e)
-      })
-    }
-  }
-
-  onCompleted() {
-    if (!this.disposed) {
-      this.observers.forEach(function(observer){
-        observer.onCompleted()
-      })
-    }
-  }
-
-  subscribe(observer: Observer<T>): Disposable {
-    if (!this.disposed) {
-      this.observers.push(observer)
-    }
-    return this
-  }
-
-  subscribeOnNext(onNext: (value: T) => void, thisArg?: any): Disposable {
-    if (!this.disposed) {
-      this.observers.push({
-        onNext: onNext.bind(thisArg),onError:function(e){},onCompleted:function(){}
-      })
-    }
-    return this
-  }
-  subscribeOnError(onError: (exception: any) => void, thisArg?: any): Disposable {
-    if (!this.disposed) {
-      this.observers.push({
-        onNext: function(value){},onError:onError.bind(thisArg),onCompleted:function(){}
-      })
-    }
-    return this
-  }
-  subscribeOnCompleted(onCompleted: () => void, thisArg?: any): Disposable {
-    if (!this.disposed) {
-      this.observers.push({
-        onNext: function(value){},onError:function(e){},onCompleted:onCompleted.bind(thisArg)
-      })
-    }
-    return this
-  }
-
-}*/
-
 export class BasicPromise<T> implements Promise<T> {
   private value:T
   private error:any
@@ -215,6 +133,7 @@ export class BasicPromise<T> implements Promise<T> {
   }
   then<TResult>(onfulfilled?: (value: T) => TResult | Promise<TResult>, onrejected?: (reason: any) => TResult | Promise<TResult>): Promise<TResult> {
     try {
+      xdmp.log(this.value)
       if (this.value !== undefined) {
         if (onfulfilled) {
           let ret = onfulfilled(this.value)
@@ -271,11 +190,13 @@ export class RemoteProxy {
   private options: xdmp.HttpOptions
 
   invokeMethod<T>(methodName, ...args:any[]): Promise<T> {
-    let ret = xdmp.httpPost(this.uri + '-' + methodName, this.options, args)
-    if (ret.code === 200) {
-      return resolve(JSON.parse(ret.message))
+    let ret = xdmp.httpPost(this.uri + '-' + methodName, this.options, args).toArray()
+
+    if (ret[0].code === 200) {
+      let value = ret[1].toObject()
+      return resolve(value)
     } else {
-      return reject(JSON.parse(ret.message))
+      return reject(ret[0].message)
     }
   }
 }

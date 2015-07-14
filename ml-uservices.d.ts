@@ -14,6 +14,11 @@ declare module "ml-uservices/dist/lib/index"{
     export = tmp;
 }
 
+declare module "ml-uservices/dist/lib/localProxy"{
+    import tmp = require('dist/lib/localProxy');
+    export = tmp;
+}
+
 declare module "ml-uservices/dist/lib/remoteProxy"{
     import tmp = require('dist/lib/remoteProxy');
     export = tmp;

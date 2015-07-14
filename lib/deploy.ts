@@ -39,6 +39,10 @@ export function deploy(client: Client, adminClient: Client, baseUri: string, mod
         if (serviceDecorator) {
           hasService = true
         }
+        let proxyDecorator = classSchema.decorators.filter(decorator=> decorator.decorator === 'mlProxy')[0]
+        if (proxyDecorator) {
+          hasService = true
+        }
       }
     }
   })
@@ -159,17 +163,17 @@ module.exports = function(uri, content){
               if (methods.length > 0) {
                 let servicePath = path.posix.join(classSchema.container.name, classSchema.name).replace(/\//g, '-')
                 let code = `
-var proxy = new require('/ext/ml-uservices').RemoteProxy('${baseUri + servicePath}', {
+var proxy = new (require('/ext/ml-uservices').RemoteProxy)('${baseUri + servicePath}', {
   headers: {
   "content-type": "application/json"
   }
 });
 
 module.exports = {
-  ${methods[0]}: proxy.invokeMethod.bind(proxy, ${methods[0]})`
+  ${methods[0]}: proxy.invokeMethod.bind(proxy, "${methods[0]}")`
                 for (let i = 1; i < methods.length; i++) {
                   code += `,
-  ${methods[i]}: proxy.invokeMethod.bind(proxy, ${methods[i]})`
+  ${methods[i]}: proxy.invokeMethod.bind(proxy, "${methods[i]}")`
                 }
                 code += `
 }`
