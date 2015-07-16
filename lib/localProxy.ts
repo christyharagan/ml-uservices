@@ -15,7 +15,6 @@ export function createLocalProxy<T>(serviceSchema: s.Class, service:T, client: C
     onPromise(memberSchema:s.ClassMember, functionT:s.FunctionType):void {
       let name = memberSchema.name
       let methodPath = path.posix.join(memberSchema.parent.container.name, memberSchema.parent.name, memberSchema.name).replace(/\//g, '-')
-
       server._post('/' + methodPath, function(args:any[]){
         return service[name].apply(service, args)
       })
